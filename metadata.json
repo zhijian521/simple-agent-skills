@@ -1,13 +1,8 @@
 {
     "name": "zhijian-skills",
-    "version": "2.0.0",
+    "version": "3.0.0",
     "description": "Agent 规范技能集：输出统一、代码简洁、结构合理、易于扩展",
     "skills": [
-        "zhijian-output-contract",
-        "zhijian-code-standards",
-        "zhijian-typescript-standards",
-        "zhijian-vue-standards",
-        "zhijian-mini-program-standards",
-        "zhijian-code-review"
+        "zhijian-project-router"
     ]
 }
