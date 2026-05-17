@@ -25,11 +25,13 @@ description: "统一项目入口技能。适用于用户希望只使用一个 sk
 
 除纯 review 场景外，默认始终带上：
 
+- `references/guardrails.md`
 - `references/output-contract.md`
 - `references/code-standards.md`
 
 如果是 review / 审查任务，必须带上：
 
+- `references/guardrails.md`
 - `references/code-review.md`
 
 如果 review 的对象包含 Vue、小程序、TypeScript、JavaScript、样式文件，也要继续读取对应专项 reference。
@@ -112,6 +114,7 @@ description: "统一项目入口技能。适用于用户希望只使用一个 sk
 
 - `references/output-contract.md`
 - `references/code-standards.md`
+- `references/guardrails.md`
 - `references/typescript.md`
 - `references/css.md`
 - `references/vue.md`
@@ -122,6 +125,7 @@ description: "统一项目入口技能。适用于用户希望只使用一个 sk
 
 - `references/output-contract.md`
 - `references/code-standards.md`
+- `references/guardrails.md`
 - `references/javascript.md`
 - `references/css.md`
 - `references/vue.md`
@@ -132,6 +136,7 @@ description: "统一项目入口技能。适用于用户希望只使用一个 sk
 
 - `references/output-contract.md`
 - `references/code-standards.md`
+- `references/guardrails.md`
 - `references/typescript.md`
 - `references/css.md`
 - `references/mini-program.md`
@@ -142,6 +147,7 @@ description: "统一项目入口技能。适用于用户希望只使用一个 sk
 
 - `references/output-contract.md`
 - `references/code-standards.md`
+- `references/guardrails.md`
 - `references/javascript.md`
 - `references/css.md`
 - `references/mini-program.md`
@@ -152,6 +158,7 @@ description: "统一项目入口技能。适用于用户希望只使用一个 sk
 
 - `references/output-contract.md`
 - `references/code-standards.md`
+- `references/guardrails.md`
 - `references/typescript.md`
 - `references/mini-program.md`
 
@@ -161,6 +168,7 @@ description: "统一项目入口技能。适用于用户希望只使用一个 sk
 
 - `references/output-contract.md`
 - `references/code-standards.md`
+- `references/guardrails.md`
 - `references/javascript.md`
 - `references/mini-program.md`
 
@@ -170,6 +178,7 @@ description: "统一项目入口技能。适用于用户希望只使用一个 sk
 
 - `references/output-contract.md`
 - `references/code-standards.md`
+- `references/guardrails.md`
 - `references/typescript.md`
 
 ### 纯 JavaScript 项目
@@ -178,11 +187,13 @@ description: "统一项目入口技能。适用于用户希望只使用一个 sk
 
 - `references/output-contract.md`
 - `references/code-standards.md`
+- `references/guardrails.md`
 - `references/javascript.md`
 
 ## 5. 执行要求
 
 - 在真正写代码前，先明确本次识别结果
+- 先读取 `references/guardrails.md`，再读取其它 reference
 - 如果项目特征冲突，优先以当前仓库实际文件结构为准
 - 如果只改样式，也不要忽略 `references/output-contract.md` 和 `references/code-standards.md`
 - 如果只做 review，也要根据代码类型补充对应专项规则

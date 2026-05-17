@@ -9,6 +9,7 @@
 - `components/` 仅放跨页面或跨模块复用组件
 - 页面私有子组件优先放在当前页面目录下的 `components/`
 - `composables/`、`stores/`、`types/`、`styles/` 按需创建
+- 简单页面不要预先拆出一整套 `components / hooks / types / service / constants`
 
 推荐目录示例：
 
@@ -53,6 +54,17 @@ src/
 - 同一功能的状态、计算属性、方法尽量放在一起
 - 不要把所有 `ref` 写一堆、所有方法再写一堆
 - 页面功能较多时，按功能分组比按语法分层更容易维护
+- 一次性逻辑不要硬抽成 composable
+- 单页使用的弹窗或表单不要急着抽全局组件
+
+反例：
+
+- 一个简单列表页拆成 `index.vue`、`use-list.ts`、`use-filter.ts`、`use-dialog.ts`、`types.ts`、`constants.ts`
+
+正例：
+
+- 先在 `index.vue` 内按功能收拢状态和方法
+- 只有真正复用时再拆分
 
 ## 状态管理
 
@@ -65,3 +77,4 @@ src/
 - 重计算逻辑移到 `computed`
 - `v-for` 的 `key` 使用稳定业务标识
 - 避免 `v-if` 与 `v-for` 写在同一元素
+- 不要在模板中到处写 `item?.name || '-'` 这类兜底表达式

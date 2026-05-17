@@ -8,6 +8,7 @@
 - `map`、`filter`、`reduce` 适合时再用，不强行替代所有 `for`
 - 连续多步转换过长时拆成具名步骤
 - 能提前返回时不写层层包裹
+- 不要接口返回后逐字段补默认值
 
 推荐示例：
 
@@ -34,6 +35,23 @@ const buildUserOptions = (list) => {
 };
 ```
 
+反例：
+
+```js
+const user = {
+    id: res.id ?? '',
+    name: res.name ?? '',
+    mobile: res.mobile ?? '',
+};
+```
+
+正例：
+
+```js
+const user = res;
+const displayName = user.name || '-';
+```
+
 ## 异步与错误
 
 - 默认使用 `async/await`
@@ -46,6 +64,7 @@ const buildUserOptions = (list) => {
 - 模块导出内容保持克制
 - 工具函数按领域聚合，不建 `common` / `helper` 大杂烩
 - 常量、纯函数尽量靠近使用处，明确复用后再上提
+- 配置、key、路径、默认值抽离到集中位置
 
 推荐目录示例：
 
@@ -70,3 +89,4 @@ src/
 - 为了模仿 TypeScript 写大量伪类型注释
 - 一边猜数据结构，一边直接深层访问
 - 只有一处使用却抽成“通用工具”
+- 对接口对象逐字段机械补默认值

@@ -46,6 +46,30 @@ src/
 - 数据处理同时关注可读性与类型稳定性
 - 经过 `filter`、`map`、`reduce` 后，结果类型要清晰可推导
 - 连续多步转换过长时拆成具名步骤或具名类型
+- 不要为了类型安全把每个字段都补默认值
+
+反例：
+
+```ts
+const user = {
+    id: res.id ?? '',
+    name: res.name ?? '',
+    mobile: res.mobile ?? '',
+};
+```
+
+正例：
+
+```ts
+interface UserResponse {
+    id: string;
+    name: string;
+    mobile?: string;
+}
+
+const user = res as UserResponse;
+const displayName = user.name || '-';
+```
 
 ## 异步与错误
 
@@ -59,6 +83,7 @@ src/
 - 模块导出内容保持克制
 - 工具函数按领域聚合，不建 `common` / `helper` 大杂烩
 - 常量、类型、纯函数尽量靠近使用处，明确复用后再上提
+- 配置、常量、key 统一抽离，不写死在业务文件
 
 推荐目录示例：
 
@@ -83,3 +108,4 @@ src/
 - `any` 到处透传
 - 一边断言一边猜类型
 - 用工具类型把简单问题写复杂
+- 为了“保险”对接口字段逐项重组默认值
