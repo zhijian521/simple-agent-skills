@@ -37,6 +37,14 @@
 - `zhijian-project-router/references/mini-program.md`
 - `zhijian-project-router/references/code-review.md`
 
+其中已经内置一组“前端代码精简优化”规则，分散吸收到以上 reference 中，用于处理：
+
+- 删除死代码、无用 class、无用样式、重复样式
+- 减少模板和页面结构中的无意义嵌套
+- 约束 CSS 命名、状态样式和公共样式提取
+- 使用简洁的分区注释提升可读性
+- 在不改变业务逻辑和 UI 效果的前提下做前端整理
+
 ## 设计思路
 
 这套 skill 采用“双层结构”：
@@ -78,6 +86,7 @@
 它会重点判断：
 
 - 当前是开发、修改、重构，还是 review
+- 当前任务是不是“代码优化 / 精简 / 整理 / 简单简洁易懂”类请求
 - 当前项目是 TypeScript 还是 JavaScript
 - 当前项目是不是 Vue Web
 - 当前项目是不是微信小程序 / uni-app
@@ -99,6 +108,7 @@
 - 再读 `output-contract.md`
 - 再读 `code-standards.md`
 - 然后根据项目类型继续读 JS / TS / CSS / Vue / 小程序 / review 对应 reference
+- 如果是前端精简优化类任务，重点执行 reference 中已经吸收的删除冗余、减少嵌套、样式简化规则
 
 ## 为什么做成单入口
 

@@ -14,10 +14,11 @@ description: "统一项目入口技能。适用于用户希望只使用一个 sk
 接到任务后，按下面顺序判断：
 
 1. 当前任务是生成 / 修改 / 重构代码，还是 review / 审查
-2. 当前项目主要语言是 TypeScript 还是 JavaScript
-3. 当前项目是不是 Vue Web
-4. 当前项目是不是微信小程序或 uni-app
-5. 当前任务是否涉及样式文件或组件样式
+2. 当前任务是否属于代码优化、代码精简、结构整理、样式瘦身
+3. 当前项目主要语言是 TypeScript 还是 JavaScript
+4. 当前项目是不是 Vue Web
+5. 当前项目是不是微信小程序或 uni-app
+6. 当前任务是否涉及样式文件或组件样式
 
 判断完成后，先读取对应 reference，再开始执行。
 
@@ -35,6 +36,14 @@ description: "统一项目入口技能。适用于用户希望只使用一个 sk
 - `references/code-review.md`
 
 如果 review 的对象包含 Vue、小程序、TypeScript、JavaScript、样式文件，也要继续读取对应专项 reference。
+
+如果是代码优化、代码精简、结构整理类任务：
+
+- 仍然先读 `references/guardrails.md`
+- 再读 `references/output-contract.md`
+- 再读 `references/code-standards.md`
+- 根据项目类型继续补充 `references/css.md`、`references/vue.md`、`references/mini-program.md`
+- 重点执行“删除冗余、减少嵌套、简化样式、补充必要分区注释”，但不要改变业务逻辑和 UI 效果
 
 ## 3. 项目识别
 
@@ -197,6 +206,7 @@ description: "统一项目入口技能。适用于用户希望只使用一个 sk
 - 如果项目特征冲突，优先以当前仓库实际文件结构为准
 - 如果只改样式，也不要忽略 `references/output-contract.md` 和 `references/code-standards.md`
 - 如果只做 review，也要根据代码类型补充对应专项规则
+- 如果是前端精简优化类任务，优先落实 reference 中的删除冗余、减少嵌套、样式简化规则
 - 不要尝试再去“调用其他顶层 skill”，以当前目录下的 `references/` 为准
 
 ## 6. 输出要求
