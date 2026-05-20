@@ -3,6 +3,6 @@
     "version": "3.0.0",
     "description": "Agent 规范技能集：输出统一、代码简洁、结构合理、易于扩展",
     "skills": [
-        "zhijian-project-router"
+        "frontend-guardrails"
     ]
 }

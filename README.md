@@ -23,19 +23,19 @@
 
 仓库现在只对外暴露一个 skill：
 
-- `zhijian-project-router`
+- `frontend-guardrails`
 
 这个 skill 内部再按需读取：
 
-- `zhijian-project-router/references/guardrails.md`
-- `zhijian-project-router/references/output-contract.md`
-- `zhijian-project-router/references/code-standards.md`
-- `zhijian-project-router/references/javascript.md`
-- `zhijian-project-router/references/typescript.md`
-- `zhijian-project-router/references/css.md`
-- `zhijian-project-router/references/vue.md`
-- `zhijian-project-router/references/mini-program.md`
-- `zhijian-project-router/references/code-review.md`
+- `frontend-guardrails/references/guardrails.md`
+- `frontend-guardrails/references/output-contract.md`
+- `frontend-guardrails/references/code-standards.md`
+- `frontend-guardrails/references/javascript.md`
+- `frontend-guardrails/references/typescript.md`
+- `frontend-guardrails/references/css.md`
+- `frontend-guardrails/references/vue.md`
+- `frontend-guardrails/references/mini-program.md`
+- `frontend-guardrails/references/code-review.md`
 
 其中已经内置一组“前端代码精简优化”规则，分散吸收到以上 reference 中，用于处理：
 
@@ -75,7 +75,7 @@
 
 ## router 如何工作
 
-`zhijian-project-router` 的职责不是重复写所有规则，而是：
+`frontend-guardrails` 的职责不是重复写所有规则，而是：
 
 1. 识别当前任务类型
 2. 识别当前项目类型
@@ -96,11 +96,11 @@
 
 安装时：
 
-- 只安装 `zhijian-project-router`
+- 只安装 `frontend-guardrails`
 
 使用时：
 
-- 只显式调用 `zhijian-project-router`
+- 只显式调用 `frontend-guardrails`
 
 执行时：
 

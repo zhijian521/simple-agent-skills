@@ -1,9 +1,9 @@
 ---
-name: zhijian-project-router
-description: "统一项目入口技能。适用于用户希望只使用一个 skill 完成不同项目开发时，先判断当前项目类型、语言、样式方式和任务类型，再决定应读取哪些内部规范 reference。"
+name: frontend-guardrails
+description: "前端项目规范守卫技能。根据项目类型（Vue、小程序、TypeScript/JavaScript）、任务类型（开发/重构/审查）自动加载对应的代码规范 reference，确保输出符合团队标准。"
 ---
 
-# 项目规范路由器
+# 前端项目规范守卫
 
 这个 skill 不重复写所有规范，而是负责先判断当前项目，再读取自己目录下对应的 `references/*.md`。
 
