@@ -51,6 +51,7 @@ export function UserCard({ user, onEdit }: UserCardProps) {
 - 昂贵计算或确有引用稳定需求时再用 `useMemo`
 - 传给已 memo 化子组件、且引用稳定确有收益的回调再用 `useCallback`
 - 纯展示子组件频繁发生无效重渲染时再评估 `React.memo`
+- 项目启用 React Compiler 时，优先依赖编译器优化，不机械补手工 memoization
 - 列表 `key` 用唯一 ID，禁止用 index
 - 按项目框架已有方式处理代码分割；不要为小组件机械加入 `lazy()`
 

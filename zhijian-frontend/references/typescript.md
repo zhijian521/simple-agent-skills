@@ -1,16 +1,19 @@
 # TypeScript 规范
 
+## 导航
+
+- 严格模式与类型定义
+- 类型、泛型与外部数据
+- 异步、模块设计与禁止项
+
 ## 严格模式
 
-`tsconfig.json` 必须开启 `strict: true`。
+新项目或新包默认开启 `strict: true`。已有项目遵循当前 `tsconfig`，不要在局部任务中开启大量严格选项并制造无关错误；如需迁移，单独规划并逐步收敛。
 
 ```json
 {
   "compilerOptions": {
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "forceConsistentCasingInFileNames": true
+    "strict": true
   }
 }
 ```
@@ -19,7 +22,7 @@
 
 - 对象形状优先 `interface`
 - 联合类型、映射、工具类型组合优先 `type`
-- 输入不可信时优先 `unknown`，收到后做类型收窄
+- API、JSON、URL、Storage、消息事件等外部输入先按 `unknown` 处理，在信任边界校验后再进入业务层
 - 返回值复杂或关键时显式标注返回类型
 
 ```ts
@@ -55,9 +58,10 @@ type UserPreview = Pick<User, "id" | "name">;
 ## 类型使用
 
 - 非空断言 `!` 谨慎使用
-- `as` 仅在类型已充分收窄时使用
+- `as` 只用于已经由运行时事实保证、但编译器无法推导的场景；不能用断言替代外部数据校验
 - `import type` 明确类型导入，编译后移除
 - `as const` 收窄字面量类型
+- 对配置对象可使用 `satisfies` 校验形状并保留字面量推导
 
 ## 数据处理
 
@@ -75,11 +79,20 @@ const user = {
 };
 ```
 
-正例：
+正例：在信任边界使用项目已有 schema 库或类型守卫校验，只对展示需要的字段兜底。
 
 ```ts
-const user = res as UserResponse;
-const displayName = user.name || "-";
+function isUserResponse(value: unknown): value is UserResponse {
+  if (!value || typeof value !== "object") return false;
+  const user = value as Record<string, unknown>;
+  return typeof user.id === "string" && typeof user.name === "string";
+}
+
+if (!isUserResponse(response)) {
+  throw new Error("用户数据格式错误");
+}
+
+const displayName = response.name || "-";
 ```
 
 ## 异步与错误
@@ -93,25 +106,7 @@ const displayName = user.name || "-";
 
 - 导出内容保持克制
 - 工具函数按领域聚合（`date.ts`、`number.ts`），不建 `common`/`helper` 大杂烩
-- 常量、类型、纯函数尽量靠近使用处，明确复用后再上提
-
-推荐目录：
-
-```
-src/
-├── api/
-│   ├── auth.ts
-│   └── user.ts
-├── utils/
-│   ├── date.ts
-│   └── number.ts
-├── constants/
-│   └── user.ts
-└── views/
-    └── user-center/
-        ├── index.vue
-        └── types.ts
-```
+- 常量、类型、纯函数尽量靠近使用处，明确复用后再上提；不要为遵循示例预建目录
 
 ## 禁止项
 

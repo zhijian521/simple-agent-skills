@@ -1,6 +1,6 @@
 # 安全规范
 
-违反任何一条，Code Review 直接打回。
+按实际风险评估严重级别。访问控制绕过、注入、敏感信息泄露、任意脚本执行等可被利用的问题必须阻断；工具告警和缺少加固项需要结合可利用性判断。
 
 ## XSS 防护
 
@@ -8,12 +8,24 @@
 | ------------------------- | ------------------------ |
 | `el.innerHTML = input`    | `el.textContent = input` |
 | `v-html="input"`          | 模板插值 `{{ input }}`   |
-| `dangerouslySetInnerHTML` | 必要时用 DOMPurify 清洗  |
+| `dangerouslySetInnerHTML` | 必要时用项目已有、可信的 HTML sanitizer 清洗 |
 
-```ts
-import DOMPurify from "dompurify";
-const clean = DOMPurify.sanitize(input);
-```
+不要为了遵循示例直接新增依赖。富文本场景同时评估允许标签、URL 协议、服务端清洗和 CSP。
+
+## 认证与授权
+
+- 认证只证明身份，资源访问仍需在服务端做对象级与操作级授权
+- 不依赖前端隐藏按钮、路由守卫或客户端角色判断作为安全边界
+- Cookie 会话评估 CSRF，并合理配置 `HttpOnly`、`Secure`、`SameSite`
+- Session、Token、重置链接和验证码应具备有效期、失效与重放防护
+
+## 输入与输出
+
+- SQL、NoSQL、命令和模板查询使用参数化 API，不拼接不可信输入
+- URL 跳转使用允许列表或同源校验，避免开放重定向
+- 服务端发起请求时限制协议、目标地址和重定向，防止 SSRF
+- 文件上传校验大小、类型、文件名、存储位置与访问权限，不信任客户端 MIME
+- 错误响应不返回堆栈、SQL、密钥、内部路径或第三方原始错误
 
 ## 安全清单
 
@@ -23,10 +35,17 @@ const clean = DOMPurify.sanitize(input);
 | 凭据存储 | 不在浏览器持久化密码、访问令牌或敏感个人信息；同源会话优先使用 HttpOnly、Secure、SameSite Cookie，其他方案遵循项目既有认证架构 |
 | 敏感信息 | 禁止前端硬编码密钥、密码                                                                                                       |
 | URL 参数 | 传递时 `encodeURIComponent` 编码                                                                                               |
-| CSP      | 配置 Content Security Policy 头                                                                                                |
-| iframe   | 加 `sandbox` 属性                                                                                                              |
-| 依赖扫描 | `npm audit` 集成 CI，高危阻断发布                                                                                              |
+| CSP      | 项目支持时配置并逐步收紧 Content Security Policy；先处理现有资源来源与内联脚本                                                 |
+| iframe   | 根据来源和所需能力配置最小 `sandbox`、`allow` 与来源限制                                                                        |
+| 依赖扫描 | 使用项目已有依赖扫描与更新流程；按可利用性、运行环境和修复成本分级处理，不仅看告警数量                                           |
 | 输入校验 | 前端格式校验 + 后端安全校验                                                                                                    |
+
+## API 与业务滥用
+
+- 登录、验证码、采集、上传、搜索等高风险入口根据业务风险设置限流和滥用防护
+- 重试可能重复执行的写操作时评估幂等性
+- 敏感操作记录必要审计信息，但日志不得包含密码、Token 或完整敏感数据
+- 第三方脚本、包和构建插件视为供应链入口，减少不必要依赖并锁定可复现版本
 
 ## 存储规范
 

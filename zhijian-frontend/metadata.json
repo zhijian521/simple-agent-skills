@@ -1,5 +1,5 @@
 {
   "name": "zhijian-frontend",
-  "version": "2.1.0",
-  "description": "前端项目规范守卫技能，融合团队 coding-guidelines 精华"
+  "version": "2.2.0",
+  "description": "项目事实优先的前端开发规范，覆盖框架、API、测试、可访问性、安全与性能"
 }

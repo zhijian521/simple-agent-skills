@@ -25,14 +25,12 @@ src/
 
 ## 代码风格
 
-- 缩进：2 空格
-- 选择器与 `{` 保留一个空格
-- 每行一个属性声明，末尾分号
+- 缩进、换行、属性排序与分号遵循项目 formatter、Stylelint 和相邻文件
 - 零值不加单位：`margin: 0`
-- 颜色小写简写：`#fff`
-- 禁止 `!important`
+- 颜色格式遵循项目工具和 token，不为大小写或简写制造无关 diff
+- 默认避免 `!important`；覆盖第三方样式、工具类或明确层叠边界时可在局部使用并说明原因
 - 避免 ID 选择器
-- SCSS 嵌套不超过 3 层
+- SCSS 嵌套以生成选择器清晰、低特异性为准，不按固定层数机械判断
 
 ## 命名
 
@@ -49,18 +47,7 @@ src/
 
 ## 响应式
 
-Mobile First：先写移动端样式，`min-width` 逐层覆盖。
-
-```css
-@media (min-width: 576px) {
-} /* 小型平板 */
-@media (min-width: 768px) {
-} /* 平板 */
-@media (min-width: 992px) {
-} /* 桌面 */
-@media (min-width: 1200px) {
-} /* 大屏 */
-```
+优先使用项目已有断点和容器策略。新项目可采用 Mobile First，但断点应由内容和设计系统决定，不复制固定设备宽度表。
 
 ## CSS 变量
 
@@ -77,21 +64,16 @@ Mobile First：先写移动端样式，`min-width` 逐层覆盖。
 }
 ```
 
-## z-index 分层
+## 层叠管理
 
-| 层级   | 范围    | 用途              |
-| ------ | ------- | ----------------- |
-| 内容层 | 0-99    | 普通元素          |
-| 浮层   | 100-199 | Dropdown、Tooltip |
-| 遮罩层 | 200-299 | Modal 遮罩        |
-| 弹窗层 | 300-399 | Modal 内容        |
-| 通知层 | 400-499 | Toast、Loading    |
+- 优先减少层叠上下文和不必要的 `z-index`
+- 多类浮层共存时复用项目已有层级 token；项目没有体系且冲突真实出现时再建立最小层级表
+- 不在通用规范中规定固定数值区间
 
 ## 动画
 
-- 只用 `transform` 和 `opacity`（不触发重排）
-- 避免 `width`/`height`/`top`/`left` 做动画
-- 必须支持 `prefers-reduced-motion`
+- 动画优先使用 `transform` 和 `opacity`；其他属性只有在效果需要且性能可接受时使用
+- 非必要动画应响应 `prefers-reduced-motion`，不能仅通过动画传达关键信息
 
 ## 清理
 
@@ -106,4 +88,4 @@ Mobile First：先写移动端样式，`min-width` 逐层覆盖。
 - 大量 `!important`
 - 视觉值到处硬编码
 - 全局类污染局部组件
-- SCSS `@extend`（用 `@mixin` 代替）
+- 难以追踪的跨模块 `@extend`；项目已局部使用且生成 CSS 可控时不机械替换
