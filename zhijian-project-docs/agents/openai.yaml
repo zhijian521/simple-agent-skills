@@ -1,0 +1,4 @@
+interface:
+  display_name: "知简项目文档"
+  short_description: "同步项目文档、代码事实、导航、方案状态与质量校验流程"
+  default_prompt: "使用 $zhijian-project-docs 建立或同步当前项目的正式文档体系。"

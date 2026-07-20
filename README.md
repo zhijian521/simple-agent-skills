@@ -8,6 +8,7 @@
 | --- | --- | --- |
 | `zhijian-guardrails` | 约束 Agent 的反模式与输出边界 | 前端开发、重构、优化与审查任务的基础约束 |
 | `zhijian-frontend` | 提供项目事实优先的前端开发规范 | Vue、React、Next.js、小程序 / uni-app，以及 JavaScript、TypeScript、样式、接口、测试、可访问性、安全与性能任务 |
+| `zhijian-project-docs` | 管理与同步项目正式文档 | 建立 docs 体系、同步代码与文档、维护方案状态、审查文档漂移和设计文档校验 |
 
 ## 推荐组合
 
@@ -18,10 +19,12 @@
 
 仅需要约束输出边界时，可单独使用 `zhijian-guardrails`。仅需要前端规范指导时，可单独使用 `zhijian-frontend`。
 
+创建、同步或审查项目文档时使用 `zhijian-project-docs`；涉及代码修改时可与对应开发规范 skill 组合使用。
+
 ## 仓库约定
 
 - 一个 skill 使用一个一级目录，目录名必须与其 `SKILL.md`、`metadata.json` 中的 `name` 一致。
-- skill 内只放执行该技能所需的 `SKILL.md`、`metadata.json`、`references/`、`scripts/` 或 `assets/`；不要在 skill 内新增 README 或变更日志。
+- skill 内只放执行该技能所需的 `SKILL.md`、`metadata.json`、`agents/`、`references/`、`scripts/` 或 `assets/`；不要在 skill 内新增 README 或变更日志。
 - skill 之间通过明确的组合建议协作，不跨目录引用对方的内部文件。
 - 通用规范不得覆盖项目已有脚本、配置、已提交实现和更具体的项目规范。
 - 涉及版本敏感的框架与标准时，在 `references/sources.md` 记录官方来源和复查日期。
@@ -38,9 +41,16 @@ simple-agent-skills/
 ├─ zhijian-guardrails/
 │  ├─ SKILL.md
 │  ├─ metadata.json
+│  ├─ agents/
 │  └─ references/
-└─ zhijian-frontend/
+├─ zhijian-frontend/
+│  ├─ SKILL.md
+│  ├─ metadata.json
+│  ├─ agents/
+│  └─ references/
+└─ zhijian-project-docs/
    ├─ SKILL.md
    ├─ metadata.json
+   ├─ agents/
    └─ references/
 ```

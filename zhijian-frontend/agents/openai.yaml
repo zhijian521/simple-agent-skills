@@ -1,0 +1,4 @@
+interface:
+  display_name: "知简前端规范"
+  short_description: "按项目事实加载前端框架、类型、安全、测试、可访问性与性能规范"
+  default_prompt: "使用 $zhijian-frontend 按当前项目类型和任务内容加载对应前端规范。"
