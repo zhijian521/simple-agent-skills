@@ -9,30 +9,29 @@
 ```html
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="页面描述">
-  <title>页面标题</title>
-</head>
-<body>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="页面描述" />
+    <title>页面标题</title>
+  </head>
+  <body></body>
 </html>
 ```
 
 ## 规范要点
 
-| 项 | 要求 |
-|------|------|
-| DOCTYPE | `<!DOCTYPE html>` |
-| 编码 | UTF-8 |
-| 语义化 | `<header>` `<nav>` `<main>` `<footer>` 替代 `<div>` |
-| 属性引号 | 双引号 |
-| 标签闭合 | 不省略可选关闭标签 |
-| 缩进 | 2 空格 |
-| 内联样式 | 禁止 |
-| `target="_blank"` | 加 `rel="noopener noreferrer"` |
-| 图片 | 必须写 `alt` |
+| 项                | 要求                                                |
+| ----------------- | --------------------------------------------------- |
+| DOCTYPE           | `<!DOCTYPE html>`                                   |
+| 编码              | UTF-8                                               |
+| 语义化            | `<header>` `<nav>` `<main>` `<footer>` 替代 `<div>` |
+| 属性引号          | 双引号                                              |
+| 标签闭合          | 不省略可选关闭标签                                  |
+| 缩进              | 2 空格                                              |
+| 内联样式          | 禁止                                                |
+| `target="_blank"` | 加 `rel="noopener noreferrer"`                      |
+| 图片              | 必须写 `alt`                                        |
 
 ## 属性书写顺序
 
@@ -66,9 +65,9 @@
 ## 资源预加载
 
 ```html
-<link rel="preload" href="/fonts/main.woff2" as="font" crossorigin>
-<link rel="prefetch" href="/page-2.js">
-<link rel="preconnect" href="https://api.example.com">
+<link rel="preload" href="/fonts/main.woff2" as="font" crossorigin />
+<link rel="prefetch" href="/page-2.js" />
+<link rel="preconnect" href="https://api.example.com" />
 ```
 
 ## iframe

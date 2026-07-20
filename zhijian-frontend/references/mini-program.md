@@ -14,6 +14,7 @@
 - 不预建空目录
 
 原生小程序：
+
 ```
 ├── app.json
 ├── pages/
@@ -31,6 +32,7 @@
 ```
 
 uni-app：
+
 ```
 ├── App.vue
 ├── pages.json

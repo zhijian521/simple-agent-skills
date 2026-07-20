@@ -57,14 +57,13 @@ const user = { id: res.id ?? '', name: res.name ?? '', mobile: res.mobile ?? '' 
 
 改动功能时顺手清掉同文件里的死代码和旧样式。结构能平铺就平铺。
 
-## 6. 不要把配置和常量写死在业务文件
+## 6. 不要把跨模块配置和常量写死在业务文件
 
-以下内容集中管理：
+以下具有跨模块作用、需要环境切换、会频繁调整或属于基础设施的内容应集中管理：
 - 接口 base URL
 - storage key / cache key
 - 路由常量
-- magic string / magic number
-- 超时时间、分页默认值
+- 业务枚举、超时时间、分页默认值
 
 反例：
 ```ts
@@ -73,6 +72,8 @@ request('/api/user/list');
 const timeout = 30000;
 ```
 正例：放到 `constants`、`config`、`env` 或项目既有集中位置。
+
+仅当前文件使用的局部标签、单次判断值或实现细节可以就近定义，不为它们新建 `constants` 或 `config` 文件。
 
 ## 7. 不要写废话注释，也不要遗漏关键注释
 

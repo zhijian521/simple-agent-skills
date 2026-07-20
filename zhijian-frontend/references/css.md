@@ -1,5 +1,7 @@
 # CSS / SCSS / Less 规范
 
+仓库已有的格式化配置、CSS 架构和设计 token 优先；本文件只补充项目未规定的默认做法。
+
 ## 样式组织
 
 - 同组件样式就近放置
@@ -8,6 +10,7 @@
 - 不建大而乱的 `common.css`
 
 推荐目录：
+
 ```
 src/
 ├── styles/
@@ -49,17 +52,22 @@ src/
 Mobile First：先写移动端样式，`min-width` 逐层覆盖。
 
 ```css
-@media (min-width: 576px) {}  /* 小型平板 */
-@media (min-width: 768px) {}  /* 平板 */
-@media (min-width: 992px) {}  /* 桌面 */
-@media (min-width: 1200px) {} /* 大屏 */
+@media (min-width: 576px) {
+} /* 小型平板 */
+@media (min-width: 768px) {
+} /* 平板 */
+@media (min-width: 992px) {
+} /* 桌面 */
+@media (min-width: 1200px) {
+} /* 大屏 */
 ```
 
 ## CSS 变量
 
-视觉属性统一用 CSS 变量，定义在 `:root`。格式：`--{类别}-{属性}`。
+优先复用项目已有的设计 token。只有跨组件稳定复用的颜色、间距、字号等视觉刻度才新增 token；局部差异可定义在组件根节点，不强行放到 `:root`。
 
 ```css
+/* 仅在项目没有既有 token 体系时，使用这一命名方式。 */
 :root {
   --color-primary: #06c;
   --color-text: #1a1a1a;
@@ -71,13 +79,13 @@ Mobile First：先写移动端样式，`min-width` 逐层覆盖。
 
 ## z-index 分层
 
-| 层级 | 范围 | 用途 |
-|------|------|------|
-| 内容层 | 0-99 | 普通元素 |
-| 浮层 | 100-199 | Dropdown、Tooltip |
-| 遮罩层 | 200-299 | Modal 遮罩 |
-| 弹窗层 | 300-399 | Modal 内容 |
-| 通知层 | 400-499 | Toast、Loading |
+| 层级   | 范围    | 用途              |
+| ------ | ------- | ----------------- |
+| 内容层 | 0-99    | 普通元素          |
+| 浮层   | 100-199 | Dropdown、Tooltip |
+| 遮罩层 | 200-299 | Modal 遮罩        |
+| 弹窗层 | 300-399 | Modal 内容        |
+| 通知层 | 400-499 | Toast、Loading    |
 
 ## 动画
 

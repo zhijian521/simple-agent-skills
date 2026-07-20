@@ -29,18 +29,18 @@ interface User {
   age?: number;
 }
 
-type UserRole = 'admin' | 'editor' | 'viewer';
+type UserRole = "admin" | "editor" | "viewer";
 type ApiResponse<T> = { code: number; data: T; message: string };
 ```
 
 ## type vs interface
 
-| 场景 | 使用 |
-|------|------|
-| 对象形状定义 | `interface`（可 extend，报错信息更清晰） |
-| 联合类型、交叉类型 | `type` |
-| 工具类型组合 | `type` |
-| 函数签名 | `type` |
+| 场景               | 使用                                     |
+| ------------------ | ---------------------------------------- |
+| 对象形状定义       | `interface`（可 extend，报错信息更清晰） |
+| 联合类型、交叉类型 | `type`                                   |
+| 工具类型组合       | `type`                                   |
+| 函数签名           | `type`                                   |
 
 ## 泛型
 
@@ -49,7 +49,7 @@ type ApiResponse<T> = { code: number; data: T; message: string };
 
 ```ts
 type PartialUser = Partial<User>;
-type UserPreview = Pick<User, 'id' | 'name'>;
+type UserPreview = Pick<User, "id" | "name">;
 ```
 
 ## 类型使用
@@ -66,13 +66,20 @@ type UserPreview = Pick<User, 'id' | 'name'>;
 - 不为了类型安全把接口每个字段都补默认值
 
 反例：
+
 ```ts
-const user = { id: res.id ?? '', name: res.name ?? '', mobile: res.mobile ?? '' };
+const user = {
+  id: res.id ?? "",
+  name: res.name ?? "",
+  mobile: res.mobile ?? "",
+};
 ```
+
 正例：
+
 ```ts
 const user = res as UserResponse;
-const displayName = user.name || '-';
+const displayName = user.name || "-";
 ```
 
 ## 异步与错误
@@ -89,6 +96,7 @@ const displayName = user.name || '-';
 - 常量、类型、纯函数尽量靠近使用处，明确复用后再上提
 
 推荐目录：
+
 ```
 src/
 ├── api/

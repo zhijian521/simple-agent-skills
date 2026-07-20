@@ -2,9 +2,12 @@
 
 核心原则：**可读优先、一致至上、极简原则**。
 
+仓库已有的格式化、Lint、类型检查和目录约定优先；本文件只补充项目未规定的默认做法。
+
 ## 决策顺序
 
 开始写代码前：
+
 1. 能否在现有文件内完成
 2. 能否用更直接的实现完成
 3. 是否真的需要新增抽象、工具函数、组件、hook、composable、store
@@ -14,7 +17,7 @@
 
 ## 代码风格
 
-- 缩进：2 空格
+- 缩进：4 空格
 - 引号：单引号，模板字符串用反引号
 - 分号：语句末尾保留
 - 尾逗号：多行对象、数组、参数列表保留
@@ -23,17 +26,17 @@
 
 ## 命名
 
-| 类别 | 规则 | 示例 |
-|------|------|------|
-| 变量/函数 | `camelCase` | `userName`、`getUserInfo` |
-| 组件/类/类型/接口 | `PascalCase` | `UserCard`、`OrderStatus` |
-| 常量 | `UPPER_SNAKE_CASE` | `MAX_SIZE`、`API_BASE_URL` |
-| 文件名 | `kebab-case` | `date-formatter.ts` |
-| 布尔值 | `is`/`has`/`can` 前缀 | `isLoading`、`hasPermission` |
-| 事件处理函数 | `handle` + 事件名 | `handleClick`、`handleSubmit` |
-| 事件回调 prop | `on` + 事件名 | `onClick`、`onChange` |
-| 路由 path | kebab-case | `/user-profile` |
-| 路由 name | camelCase | `userProfile` |
+| 类别              | 规则                  | 示例                          |
+| ----------------- | --------------------- | ----------------------------- |
+| 变量/函数         | `camelCase`           | `userName`、`getUserInfo`     |
+| 组件/类/类型/接口 | `PascalCase`          | `UserCard`、`OrderStatus`     |
+| 常量              | `UPPER_SNAKE_CASE`    | `MAX_SIZE`、`API_BASE_URL`    |
+| 文件名            | `kebab-case`          | `date-formatter.ts`           |
+| 布尔值            | `is`/`has`/`can` 前缀 | `isLoading`、`hasPermission`  |
+| 事件处理函数      | `handle` + 事件名     | `handleClick`、`handleSubmit` |
+| 事件回调 prop     | `on` + 事件名         | `onClick`、`onChange`         |
+| 路由 path         | kebab-case            | `/user-profile`               |
+| 路由 name         | camelCase             | `userProfile`                 |
 
 禁止：拼音命名、自造缩写（`usrNm`）、无意义名称（`data`、`temp`、`item1`）。
 
@@ -46,18 +49,22 @@
 - 关键配置对象、特殊兼容逻辑、复杂字段转换 → 必须注释
 
 分区注释格式：
+
 - 模板：`<!-- 区块名 -->`
 - 脚本：`/*== 区块名 ==*/`
 - 样式：`/*== 区块名 ==*/`
 
 JSDoc 示例：
+
 ```ts
 /**
  * 根据用户 ID 获取用户信息
  * @param userId - 用户唯一标识
  * @returns 用户信息对象，失败时返回 null
  */
-async function fetchUser(userId: string): Promise<User | null> { /* ... */ }
+async function fetchUser(userId: string): Promise<User | null> {
+  /* ... */
+}
 ```
 
 ## 导入顺序
@@ -78,10 +85,11 @@ async function fetchUser(userId: string): Promise<User | null> { /* ... */ }
 - 参数超 4 个用 options 对象
 
 正例：
+
 ```ts
 function processOrder(order) {
   if (!order) return null;
-  if (order.status !== 'pending') return null;
+  if (order.status !== "pending") return null;
   return validate(order);
 }
 ```
@@ -97,8 +105,9 @@ function processOrder(order) {
 
 ## 配置与常量
 
-- 接口地址、key、超时、分页默认值、业务枚举统一抽离
-- 优先放 `config`、`constants`、`env` 或项目既有集中位置
+- 跨模块复用、需要环境切换、会频繁调整或属于基础设施的配置统一管理
+- 仅当前文件使用的局部常量就近定义，不为单次使用新建 `constants` 或 `config` 文件
+- 优先复用项目既有的 `config`、`constants`、`env` 或同类集中位置
 
 ## 提交信息
 
@@ -119,7 +128,7 @@ function processOrder(order) {
 - 删除模板/CSS 中未使用的样式类
 - 删除重复的 CSS 属性（如父子元素重复设置相同值）
 - 删除无意义的 CSS 属性（如 `display: block` 在已有 flex 的上下文中）
-- **组件内嵌的 inline SVG 代码，抽取为独立 `.svg` 文件放入 `static/icons/` 目录，通过 `<image>` 标签引入**
+- 复杂且重复使用的 inline SVG，可按项目现有的图标或静态资源方案抽取；一次性且简单的 SVG 不强制拆出
 
 ### 减少嵌套
 
@@ -138,23 +147,16 @@ function processOrder(order) {
 ### CSS 命名与简化
 
 - **类名简洁**：优先用 `.item` `.tag` `.num` 等短名，避免 `.road-card__status--construction` 式冗长 BEM
-- **公共样式提取**：相同属性（如圆角、padding、display）提取为公共类或 SCSS mixin
+- **公共样式提取**：仅对跨组件稳定复用的完整样式模式提取公共类、mixin 或 token；不要只因少量属性相同就抽公共层
 - **状态批量处理**：颜色/状态类使用 SCSS 循环或 CSS 变量统一生成，不手写 5 遍相似规则
 - **语义优先**：类名见名知义，不堆砌修饰词（如 `.btn-primary` 优于 `.button-style-primary-theme`）
-
-### 格式化规则（精简优化时适用）
-
-- **缩进**：4 空格，禁用 Tab
-- **行长**：不超过 140 字符
-- **属性换行**：单个元素属性不强制每行一个 (`singleAttributePerLine: false`)
-- **HTML 空白**：忽略 HTML 空白敏感度 (`htmlWhitespaceSensitivity: ignore`)
 
 ### 精简优化工作流
 
 1. 读取目标文件，理解当前结构
 2. 识别并删除：死代码、无用 class、重复样式、多余嵌套
 3. CSS 专项：检查类名是否冗长、状态色是否重复手写、公共样式是否可提取
-4. 添加分区注释，让代码结构一目了然
+4. 仅在复杂边界、特殊约束或大区块需要时补充注释
 5. 确保修改后功能不变、样式不变
 
 **限制**：不改业务逻辑，不改变 UI 效果，不引入新的依赖或框架。

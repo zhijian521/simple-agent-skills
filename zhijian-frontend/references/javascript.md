@@ -16,10 +16,11 @@
 - 纯函数优先
 
 反例：
+
 ```js
 function processOrder(order) {
   if (order) {
-    if (order.status === 'pending') {
+    if (order.status === "pending") {
       if (order.amount > 0) {
         return validate(order);
       }
@@ -29,10 +30,11 @@ function processOrder(order) {
 ```
 
 正例：
+
 ```js
 function processOrder(order) {
   if (!order) return null;
-  if (order.status !== 'pending') return null;
+  if (order.status !== "pending") return null;
   if (order.amount <= 0) return null;
   return validate(order);
 }
@@ -55,13 +57,20 @@ function processOrder(order) {
 - 不接口返回后逐字段补默认值
 
 反例：
+
 ```js
-const user = { id: res.id ?? '', name: res.name ?? '', mobile: res.mobile ?? '' };
+const user = {
+  id: res.id ?? "",
+  name: res.name ?? "",
+  mobile: res.mobile ?? "",
+};
 ```
+
 正例：
+
 ```js
 const user = res;
-const displayName = user.name || '-';
+const displayName = user.name || "-";
 ```
 
 ## 定时器与事件
@@ -72,7 +81,7 @@ const displayName = user.name || '-';
 
 ## 存储与 URL
 
-- localStorage key 用命名空间前缀：`myapp:token`
+- 非敏感 localStorage key 使用项目既有的命名空间前缀
 - 禁止在 localStorage 存密码、Token
 - URL 参数用 `encodeURIComponent` 编码
 - 用 `URLSearchParams` 构建参数

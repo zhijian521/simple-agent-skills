@@ -4,22 +4,24 @@
 
 ## 代码优化
 
-| 方向 | 措施 |
-|------|------|
-| 代码分割 | 路由懒加载、组件动态导入 |
-| 按需引入 | `import { debounce } from 'lodash-es'` 而非全量 |
+| 方向       | 措施                                              |
+| ---------- | ------------------------------------------------- |
+| 代码分割   | 路由懒加载、组件动态导入                          |
+| 按需引入   | `import { debounce } from 'lodash-es'` 而非全量   |
 | 重渲染控制 | `useMemo`/`computed`、`useCallback`、`React.memo` |
-| 长列表 | 虚拟滚动 |
+| 长列表     | 虚拟滚动                                          |
 
 ```ts
 // 路由懒加载
-const routes = [{
-  path: '/dashboard',
-  component: () => import('@/pages/Dashboard.vue'),
-}];
+const routes = [
+  {
+    path: "/dashboard",
+    component: () => import("@/pages/Dashboard.vue"),
+  },
+];
 
 // React
-const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
 ```
 
 ## 图片
@@ -31,27 +33,27 @@ const Dashboard = lazy(() => import('./pages/Dashboard'));
 
 ```html
 <picture>
-  <source srcset="img.webp" type="image/webp">
-  <img src="img.jpg" loading="lazy" alt="">
+  <source srcset="img.webp" type="image/webp" />
+  <img src="img.jpg" loading="lazy" alt="" />
 </picture>
 ```
 
 ## 资源加载
 
-| 资源 | 策略 |
-|------|------|
-| 关键 CSS | 内联 `<head>`，非关键延迟 |
-| 关键 JS | `async` 不阻塞渲染 |
-| 字体 | `font-display: swap` + `preload` + 子集化 |
-| 第三方脚本 | 异步、按需、超 50KB 需审批 |
+| 资源       | 策略                                      |
+| ---------- | ----------------------------------------- |
+| 关键 CSS   | 内联 `<head>`，非关键延迟                 |
+| 关键 JS    | `async` 不阻塞渲染                        |
+| 字体       | `font-display: swap` + `preload` + 子集化 |
+| 第三方脚本 | 异步、按需、超 50KB 需审批                |
 
 ## Core Web Vitals
 
-| 指标 | 目标 | 说明 |
-|------|------|------|
-| LCP | ≤ 2.5s | 最大内容绘制 |
-| INP | ≤ 200ms | 交互响应延迟 |
-| CLS | ≤ 0.1 | 累积布局偏移 |
+| 指标 | 目标    | 说明         |
+| ---- | ------- | ------------ |
+| LCP  | ≤ 2.5s  | 最大内容绘制 |
+| INP  | ≤ 200ms | 交互响应延迟 |
+| CLS  | ≤ 0.1   | 累积布局偏移 |
 
 ## 请求优化
 

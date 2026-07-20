@@ -1,129 +1,44 @@
 # simple-agent-skills
 
-单入口 Agent 规范技能集，目标是解决项目开发中常见的代码生成问题，让 Agent 输出更稳定、更统一、更简洁。
+个人 Agent 技能仓库。每个一级目录都是可独立安装、独立演进的 skill；根目录只维护技能清单与使用导航。
 
-## 这个 skill 要解决什么问题
+## 技能目录
 
-我创建这套 skill，主要是为了压住 Agent 在项目开发里经常出现的这些问题：
+| Skill | 职责 | 适用场景 |
+| --- | --- | --- |
+| `zhijian-guardrails` | 约束 Agent 的反模式与输出边界 | 前端开发、重构、优化与审查任务的基础约束 |
+| `zhijian-frontend` | 提供前端项目的正向开发规范 | Vue、React、Next.js、小程序 / uni-app，以及 JavaScript、TypeScript、样式、接口、测试与性能任务 |
 
-- 结构复杂，简单需求被拆成很多层
-- 无必要新增文件、目录、组件、hook、composable、utils
-- 为了“安全”堆很多无意义空判断
-- 接口返回数据被逐字段补默认值、逐字段重新组装
-- 配置、接口地址、storage key、magic string 写死在业务文件
-- 格式不统一、代码冗余、注释要么太多废话要么缺关键说明
-- 项目结构、文件职责、语言与框架写法不统一
+## 推荐组合
 
-这套 skill 的目标不是只做“规范说明”，而是同时做两件事：
+前端开发、修改、重构、优化或审查时，先使用 `zhijian-guardrails`，再使用 `zhijian-frontend`。
 
-1. 压制坏习惯
-2. 提供正向规范
+- `zhijian-guardrails` 负责明确不该做什么，例如避免无意义的抽象、空判断、硬编码和死代码。
+- `zhijian-frontend` 根据项目类型按需加载对应 reference，说明应采用的结构与写法。
 
-## 当前结构
+仅需要约束输出边界时，可单独使用 `zhijian-guardrails`。仅需要前端规范指导时，可单独使用 `zhijian-frontend`。
 
-仓库现在只对外暴露一个 skill：
+## 仓库约定
 
-- `frontend-guardrails`
+- 一个 skill 使用一个一级目录，目录名必须与其 `SKILL.md`、`metadata.json` 中的 `name` 一致。
+- skill 内只放执行该技能所需的 `SKILL.md`、`metadata.json`、`references/`、`scripts/` 或 `assets/`；不要在 skill 内新增 README 或变更日志。
+- skill 之间通过明确的组合建议协作，不跨目录引用对方的内部文件。
+- 新增 skill 时：创建独立目录、补齐元数据，并在根 `metadata.json` 和本 README 的技能目录中登记。
+- 废弃 skill 时：先从根 `metadata.json` 和 README 移除，再删除该目录。
+- 根版本遵循语义化版本：兼容的规则补充升 minor 或 patch；删除、改名或调整调用方式升 major。
 
-这个 skill 内部再按需读取：
+## 目录结构
 
-- `frontend-guardrails/references/guardrails.md`
-- `frontend-guardrails/references/output-contract.md`
-- `frontend-guardrails/references/code-standards.md`
-- `frontend-guardrails/references/javascript.md`
-- `frontend-guardrails/references/typescript.md`
-- `frontend-guardrails/references/css.md`
-- `frontend-guardrails/references/vue.md`
-- `frontend-guardrails/references/mini-program.md`
-- `frontend-guardrails/references/code-review.md`
-
-其中已经内置一组“前端代码精简优化”规则，分散吸收到以上 reference 中，用于处理：
-
-- 删除死代码、无用 class、无用样式、重复样式
-- 减少模板和页面结构中的无意义嵌套
-- 约束 CSS 命名、状态样式和公共样式提取
-- 使用中文分区注释提升可读性，`TODO` 等固定标记可保留英文
-- 在不改变业务逻辑和 UI 效果的前提下做前端整理
-
-## 设计思路
-
-这套 skill 采用“双层结构”：
-
-### 1. 压制层
-
-`guardrails.md` 优先级最高，专门压制 Agent 的常见坏习惯，例如：
-
-- 不要无必要新增文件
-- 不要无必要抽公共层
-- 不要为了保险堆空判断
-- 不要逐字段补默认值
-- 不要把配置和 key 写死在业务文件
-- 不要写废话注释
-
-### 2. 规范层
-
-其它 references 负责给出推荐写法、目录结构、文件职责、正例和反例，例如：
-
-- `code-standards.md`: 通用代码规范
-- `javascript.md`: JavaScript 规范
-- `typescript.md`: TypeScript 规范
-- `css.md`: CSS / SCSS / Less 规范
-- `vue.md`: Vue 3 规范
-- `mini-program.md`: 微信小程序 / uni-app 规范
-- `code-review.md`: 审查输出规范
-- `output-contract.md`: 回复输出规范
-
-## router 如何工作
-
-`frontend-guardrails` 的职责不是重复写所有规则，而是：
-
-1. 识别当前任务类型
-2. 识别当前项目类型
-3. 先读取压制层
-4. 再读取对应规范层
-5. 最后按组合后的规则输出结果
-
-它会重点判断：
-
-- 当前是开发、修改、重构，还是 review
-- 当前任务是不是“代码优化 / 精简 / 整理 / 简单简洁易懂”类请求
-- 当前项目是 TypeScript 还是 JavaScript
-- 当前项目是不是 Vue Web
-- 当前项目是不是微信小程序 / uni-app
-- 当前任务是否涉及样式
-
-## 推荐使用方式
-
-安装时：
-
-- 只安装 `frontend-guardrails`
-
-使用时：
-
-- 只显式调用 `frontend-guardrails`
-
-执行时：
-
-- 先读 `guardrails.md`
-- 再读 `output-contract.md`
-- 再读 `code-standards.md`
-- 然后根据项目类型继续读 JS / TS / CSS / Vue / 小程序 / review 对应 reference
-- 如果是前端精简优化类任务，重点执行 reference 中已经吸收的删除冗余、减少嵌套、样式简化规则
-
-## 为什么做成单入口
-
-这样做有几个明显好处：
-
-- 使用成本低，以后只用一个 skill
-- 不需要每次手工选择 Vue、TS、CSS、review 等多个 skill
-- 能先统一压制坏习惯，再补充具体规范
-- 后续扩展 React、Next.js、Node.js、Python 也更自然
-
-## 后续扩展方向
-
-后面这套 skill 还可以继续补强：
-
-- `mini-program.md` 增加更多压制项和正反例
-- `css.md` 增加更多反例
-- router 增加更细的任务类型判断
-- 增加 React / Next.js / Node.js / Python 专项 reference
+```text
+simple-agent-skills/
+├─ metadata.json
+├─ README.md
+├─ zhijian-guardrails/
+│  ├─ SKILL.md
+│  ├─ metadata.json
+│  └─ references/
+└─ zhijian-frontend/
+   ├─ SKILL.md
+   ├─ metadata.json
+   └─ references/
+```

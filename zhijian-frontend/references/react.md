@@ -1,51 +1,44 @@
 # React 组件规范
 
-函数组件 + Hooks，禁止 Class 组件。
+优先使用函数组件与 Hooks。只有维护既有 Class 组件时才沿用其现有模式。
 
 ## 函数组件
 
 ```tsx
-import { useState, useCallback, useMemo } from 'react';
-import type { FC } from 'react';
+import { useState } from "react";
 
 interface UserCardProps {
   user: User;
   onEdit?: (user: User) => void;
 }
 
-export const UserCard: FC<UserCardProps> = ({ user, onEdit }) => {
+export function UserCard({ user, onEdit }: UserCardProps) {
   const [isExpanded, setExpanded] = useState(false);
 
-  const handleEdit = useCallback(() => {
+  function handleEdit() {
     onEdit?.(user);
-  }, [onEdit, user]);
-
-  const displayName = useMemo(() =>
-    user.nickname || user.name,
-  [user]);
+  }
 
   return (
     <div>
-      <h3>{displayName}</h3>
+      <h3>{user.nickname || user.name}</h3>
       <button onClick={handleEdit}>编辑</button>
     </div>
   );
-};
-
-UserCard.displayName = 'UserCard';
+}
 ```
 
 ## 规范要点
 
-| 项 | 要求 |
-|------|------|
-| 组件类型 | 函数组件 + Hooks |
-| Props | TypeScript interface 定义 |
-| 自定义 Hook | `use` 前缀 |
-| 事件处理 | `handle` 前缀 |
-| 组件大小 | 不超过 300 行 |
-| JSX 内联函数 | 避免，用 `useCallback` 包裹 |
-| displayName | 必须设置 |
+| 项           | 要求                                                                |
+| ------------ | ------------------------------------------------------------------- |
+| 组件类型     | 函数组件 + Hooks                                                    |
+| Props        | TypeScript interface 定义                                           |
+| 自定义 Hook  | `use` 前缀                                                          |
+| 事件处理     | `handle` 前缀                                                       |
+| 组件大小     | 明显难以阅读或职责混杂时再拆分                                      |
+| JSX 内联函数 | 简单表达式可直接使用；影响子组件引用稳定性或性能时再提取            |
+| displayName  | 命名函数组件无需设置；`memo`、`forwardRef` 等调试名称不清晰时再设置 |
 
 ## useEffect
 
@@ -54,11 +47,12 @@ UserCard.displayName = 'UserCard';
 
 ## 性能
 
-- 纯展示子组件用 `React.memo`
-- 重计算用 `useMemo`
-- 传给子组件的回调用 `useCallback`
+- 先确认存在可感知或可测量的性能问题
+- 昂贵计算或确有引用稳定需求时再用 `useMemo`
+- 传给已 memo 化子组件、且引用稳定确有收益的回调再用 `useCallback`
+- 纯展示子组件频繁发生无效重渲染时再评估 `React.memo`
 - 列表 `key` 用唯一 ID，禁止用 index
-- 非首屏组件 `lazy()` + `<Suspense>`
+- 按项目框架已有方式处理代码分割；不要为小组件机械加入 `lazy()`
 
 ## Context
 
@@ -66,8 +60,6 @@ UserCard.displayName = 'UserCard';
 
 ## 禁止项
 
-- Class 组件
 - 列表 `key` 用 index
 - `useEffect` 无清理函数
-- JSX 中直接写内联函数/对象
 - `dangerouslySetInnerHTML` 无 DOMPurify

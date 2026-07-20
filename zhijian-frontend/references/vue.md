@@ -9,6 +9,7 @@
 - 简单页面不预拆 `components/hooks/types/service/constants`
 
 推荐目录：
+
 ```
 src/
 ├── views/
@@ -25,6 +26,7 @@ src/
 推荐顺序：`<script setup>` → `<template>` → `<style scoped>`
 
 脚本内顺序：
+
 1. 导入
 2. 常量与类型
 3. `defineProps` / `defineEmits`
@@ -35,13 +37,13 @@ src/
 
 ## 命名规则
 
-| 项 | 规则 | 示例 |
-|------|------|------|
-| 组件名 | 多单词 PascalCase | `UserProfile` |
-| 基础组件 | `Base`/`App` 前缀 | `BaseButton` |
-| 单例组件 | `The` 前缀 | `TheHeader` |
-| 紧密耦合 | 父组件名前缀 | `TodoList` → `TodoListItem` |
-| 模板使用 | kebab-case | `<user-profile />` |
+| 项       | 规则              | 示例                        |
+| -------- | ----------------- | --------------------------- |
+| 组件名   | 多单词 PascalCase | `UserProfile`               |
+| 基础组件 | `Base`/`App` 前缀 | `BaseButton`                |
+| 单例组件 | `The` 前缀        | `TheHeader`                 |
+| 紧密耦合 | 父组件名前缀      | `TodoList` → `TodoListItem` |
+| 模板使用 | kebab-case        | `<user-profile />`          |
 
 ## 组织原则
 
