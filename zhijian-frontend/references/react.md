@@ -5,16 +5,12 @@
 ## 函数组件
 
 ```tsx
-import { useState } from "react";
-
 interface UserCardProps {
   user: User;
   onEdit?: (user: User) => void;
 }
 
 export function UserCard({ user, onEdit }: UserCardProps) {
-  const [isExpanded, setExpanded] = useState(false);
-
   function handleEdit() {
     onEdit?.(user);
   }
@@ -63,4 +59,4 @@ export function UserCard({ user, onEdit }: UserCardProps) {
 
 - 列表 `key` 用 index
 - `useEffect` 无清理函数
-- `dangerouslySetInnerHTML` 无 DOMPurify
+- `dangerouslySetInnerHTML` 未经过项目认可的 HTML sanitizer 清洗

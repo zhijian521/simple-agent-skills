@@ -28,6 +28,7 @@
 - skill 之间通过明确的组合建议协作，不跨目录引用对方的内部文件。
 - 通用规范不得覆盖项目已有脚本、配置、已提交实现和更具体的项目规范。
 - 涉及版本敏感的框架与标准时，在 `references/sources.md` 记录官方来源和复查日期。
+- 修改技能元数据后运行 `node scripts/validate-skills.mjs`，确认三个清单和 UI 元数据一致。
 - 新增 skill 时：创建独立目录、补齐元数据，并在根 `metadata.json` 和本 README 的技能目录中登记。
 - 废弃 skill 时：先从根 `metadata.json` 和 README 移除，再删除该目录。
 - 根版本遵循语义化版本：兼容的规则补充升 minor 或 patch；删除、改名或调整调用方式升 major。
@@ -38,6 +39,8 @@
 simple-agent-skills/
 ├─ metadata.json
 ├─ README.md
+├─ scripts/
+│  └─ validate-skills.mjs
 ├─ zhijian-guardrails/
 │  ├─ SKILL.md
 │  ├─ metadata.json

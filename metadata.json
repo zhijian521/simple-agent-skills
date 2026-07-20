@@ -1,6 +1,6 @@
 {
     "name": "zhijian-skills",
-    "version": "4.3.1",
+    "version": "4.4.0",
     "description": "个人 Agent 技能集：开发约束、前端规范与项目文档管理",
     "skills": [
         "zhijian-guardrails",
