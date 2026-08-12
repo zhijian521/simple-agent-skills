@@ -20,6 +20,7 @@ Copyright 2026 alibaba/open-code-review Contributors
   中文规则参考库，并对规则内容进行了合并、翻译、补充和独立改写。
 
 规则来源快照：
-- 2026-08-12 下载的 `main` 分支源码归档。
+- 上游提交 `73c7f0f71445090cd0d31f7936394ea169ac3fd5` 的源码归档，下载日期为 2026-08-12。
 - 当时 `system_rules.json` 映射 34 类路径专属规则，并包含 35 份规则文档（含 default）。
-- 由于 Git 传输连接被重置，未取得可验证 commit SHA；更新规则前应重新对照上游。
+- 上游规则文档与本 Skill 主题参考的映射记录在 `references/upstream-rule-map.json`。
+- 更新规则前应重新获取该提交或新的目标提交，并比较 `system_rules.json` 与 `rule_docs`。

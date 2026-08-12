@@ -1,0 +1,2 @@
+disabled_rules:
+  - "P1:authorization-bypass"

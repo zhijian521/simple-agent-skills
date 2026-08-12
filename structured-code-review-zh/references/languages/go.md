@@ -20,9 +20,10 @@
 ## Context 与 goroutine
 
 - 请求级工作应继承调用方 context，不应无理由换成 `Background/TODO`。
-- `WithCancel/Timeout/Deadline` 的 cancel 必须在所有权结束时调用。
-- 阻塞 I/O、等待、重试和循环必须支持必要的取消或截止时间。
-- goroutine 必须有退出条件、错误/完成可观察路径和明确所有权。
+- `WithCancel/Timeout/Deadline` 创建的 context 在当前作用域拥有取消权且会长期存活时，检查 `cancel` 是否遗漏；
+  立即返回给调用方所有或由更高层统一取消的 context 不报告。
+- 阻塞 I/O、等待、重试和循环只在请求取消、截止时间或关闭信号确实应中断该工作时报告。
+- goroutine 只有缺少退出条件、错误/完成观察路径或明确所有权而可能泄漏时报告。
 - 检查循环变量捕获时结合模块 Go 版本；Go 1.22 改变了 range 变量语义。
 
 ## channel、锁与共享状态
@@ -35,6 +36,7 @@
 
 ## 生命周期与 I/O
 
-- response body、文件、数据库 rows、ticker 和受所有者持有的 timer 必须释放。
+- response body、文件、数据库 rows、ticker 和受当前所有者持有的 timer 在可达路径上未释放时报告；
+  由框架或调用方拥有、或短生命周期已由运行时回收且没有实际成本的对象不报告。
 - 读取必须处理短读、部分写、scanner 限制和未检查的 Close/Flush 错误。
 - 不要仅以 GC 泄漏为由报告 Go 1.23+ 可回收的未引用 timer；必须说明实际成本。

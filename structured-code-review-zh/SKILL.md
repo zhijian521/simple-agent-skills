@@ -58,36 +58,14 @@ description: 对工作区、暂存区、提交、分支、Pull Request、补丁�
 
 ## 4. 加载审查规则
 
-读取 `references/rule-map.md`，根据每个变更文件的路径、语言和用途加载对应规则。
-所有代码文件都必须读取 `references/general.md`；再按需读取语言和场景规则。
+将 `references/rule-map.md` 作为文件路由的唯一事实源。先加载
+`references/general.md`，再按路由表的路径和场景匹配加载规则；不要在本文件维护
+第二份路径映射，也不要一次性加载全部参考文件。
 
-- TypeScript、JavaScript、TSX、JSX：读取 `references/languages/typescript-javascript.md`。
-- Java、Kotlin：读取 `references/languages/java-kotlin.md`。
-- Go：读取 `references/languages/go.md`。
-- Python：读取 `references/languages/python.md`。
-- Rust、C、C++、PHP、ArkTS、Astro、Haskell、Julia、Nim（含 `.nimble`）、Nix：读取
-  `references/languages/other-languages.md` 中对应章节。
-- JSON、YAML、properties、构建与依赖清单：读取
-  `references/scenarios/config-dependencies.md`。
-- GitHub Actions：读取 `references/scenarios/github-actions.md`。
-- GitHub issue form、release 配置和其他 `.github` 配置：读取
-  `references/scenarios/github-config.md`。
-- GraphQL、Protobuf、Prisma、Mapper/DAO XML：读取
-  `references/scenarios/data-contracts.md`。
-- FreeMarker、PO/POT 和本地化资源：读取
-  `references/scenarios/templates-localization.md`。
-- Terraform、Bicep、Nix 等基础设施配置：读取
-  `references/scenarios/infrastructure.md`。
-- 涉及输入、权限、秘密、网络、文件、反序列化或执行命令：额外读取
-  `references/scenarios/security.md`。
-- 涉及数据库、循环、批处理、并发、缓存、网络或大数据量：额外读取
-  `references/scenarios/performance-reliability.md`。
-- 涉及行为变更或测试文件：额外读取 `references/scenarios/testing.md`。
-- 涉及公开契约、发布部署、依赖供应链、用户数据、用户界面或 AI/LLM 功能：
-  读取 `references/scenarios/change-risk.md` 中对应章节。
-
-只加载与当前变更有关的规则，不要一次性加载全部参考文件。仓库自身的规范与本
-规则冲突时，优先遵循仓库规范；但仓库规范不能降低明确的正确性或安全要求。
+仓库根目录存在 `.code-review.yml` 时，读取
+`references/repository-policy.md` 并应用其中的项目策略。策略只能缩小本 Skill 的
+报告范围或调整非安全问题的严重级别，不能豁免可证明的 P0/P1 安全、数据完整性或
+公开契约缺陷。策略未声明时使用本 Skill 的默认规则。
 
 ## 5. 审查维度
 
@@ -127,23 +105,26 @@ description: 对工作区、暂存区、提交、分支、Pull Request、补丁�
 影响点。不要把编译器、类型检查器、lint、格式化器或已有 CI 已准确报告的机械
 问题重复包装成人工发现；只有它们没有表达具体行为后果时才补充说明。
 
-按影响和发生可能性分类：
+先按影响分类：
 
 - `P0 严重`：立即、广泛可利用，或可能造成灾难性生产影响。
 - `P1 高`：很可能导致功能失败、安全问题、数据丢失或严重回归。
 - `P2 中`：在有限条件下成立的真实缺陷，或有明显可靠性、性能影响。
 - `P3 低`：影响较小但具体的缺陷；不要用来报告纯视觉或风格偏好。
 
-同时标记：
+再按下表决定输出位置；`高置信度`表示触发路径和后果由代码、测试或配置直接证明，
+`中置信度`表示缺少运行环境事实但条件和路径明确。
 
-- `阻塞`：高置信度的正确性、安全、数据完整性、公开契约或生产可靠性缺陷，合并前应处理。
-- `非阻塞`：真实但不妨碍合并的维护性、测试或改进建议；与问题列表分开。
-- `高置信度`：触发路径和后果已由代码、测试或配置直接证明。
-- `中置信度`：缺少运行环境事实，但条件明确且代码路径成立；必须写出成立条件。
+| 影响 | 置信度 | 输出位置 |
+|---|---|---|
+| P0/P1 | 高 | 阻塞问题 |
+| P2 | 高 | 阻塞问题，或在不影响合并时列为非阻塞问题并说明原因 |
+| P3 | 高 | 非阻塞问题 |
+| P0-P3 | 中 | 非阻塞问题或开放问题，写明待验证事实 |
+| 任意 | 低 | 不输出；必要时只记录假设 |
 
-阻塞问题必须是高置信度。中置信度判断只能作为非阻塞建议或开放问题，说明还需要验证的
-事实，不得阻止合并。低置信度猜测不作为问题输出；必要时放到“开放问题或假设”，否则
-保持沉默。
+阻塞问题只能是高置信度。不要因语言规则中出现“应当”“避免”或“禁止”就报告；
+每个 Finding 仍须满足本节开头的证据要求。
 
 ## 7. 先报告问题
 

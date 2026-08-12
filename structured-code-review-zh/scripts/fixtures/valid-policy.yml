@@ -1,0 +1,12 @@
+generated_paths:
+  - "dist/**"
+trusted_input_sources:
+  - "internal-authenticated-webhook"
+supported_runtimes:
+  node: ">=20"
+disabled_rules:
+  - "P3:generated-artifact-review"
+severity_overrides:
+  "P3:missing-regression-test": "P2"
+validation_commands:
+  - "pnpm test"
