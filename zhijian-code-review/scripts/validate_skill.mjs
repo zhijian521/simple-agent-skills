@@ -277,5 +277,5 @@ if (errors.length > 0) {
     console.error(errors.map((error) => `✗ ${error}`).join('\n'));
     process.exitCode = 1;
 } else {
-    console.log('✓ structured-code-review-zh 的结构、路由、规则映射和策略约束校验通过');
+    console.log('✓ zhijian-code-review 的结构、路由、规则映射和策略约束校验通过');
 }

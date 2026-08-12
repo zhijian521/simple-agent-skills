@@ -1,5 +1,5 @@
 ---
-name: structured-code-review-zh
+name: zhijian-code-review
 description: 对工作区、暂存区、提交、分支、Pull Request、补丁或指定文件执行系统化、基于证据的代码审查。完整覆盖变更文件，按文件类型加载内置的语言、框架、配置、CI、安全、性能、数据契约、基础设施和测试规范，结合仓库上下文按行定位问题并按严重级别输出。用户只要求审查时不要修改代码。
 ---
 

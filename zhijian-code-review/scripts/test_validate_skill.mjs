@@ -20,4 +20,4 @@ function runFixture(name, expectedStatus) {
 
 runFixture('valid-policy.yml', 0);
 runFixture('invalid-policy.yml', 1);
-console.log('✓ structured-code-review-zh 策略校验回归通过');
+console.log('✓ zhijian-code-review 策略校验回归通过');
