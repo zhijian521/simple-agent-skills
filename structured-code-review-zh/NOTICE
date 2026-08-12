@@ -1,0 +1,25 @@
+结构化代码审查
+
+本 Skill 是基于 alibaba/open-code-review 公开审查流程独立重写的衍生版本，
+尤其借鉴了其确定性文件覆盖和委托式审查流程。
+
+原项目：
+https://github.com/alibaba/open-code-review
+
+原项目版权：
+Copyright 2026 alibaba/open-code-review Contributors
+
+本衍生内容依据 Apache License 2.0 发布。
+
+本版本修改内容：
+- 移除 OpenCodeReview `ocr` CLI 依赖。
+- 为通用本地代码审查 Agent 重组审查流程。
+- 增加证据要求、严重级别、只审查边界、仓库规则处理和测试缺口报告。
+- 对指导内容和输出契约进行了重写。
+- 根据原项目 system_rules.json 与 rule_docs 的主题，新增按语言和场景组织的
+  中文规则参考库，并对规则内容进行了合并、翻译、补充和独立改写。
+
+规则来源快照：
+- 2026-08-12 下载的 `main` 分支源码归档。
+- 当时 `system_rules.json` 映射 34 类路径专属规则，并包含 35 份规则文档（含 default）。
+- 由于 Git 传输连接被重置，未取得可验证 commit SHA；更新规则前应重新对照上游。

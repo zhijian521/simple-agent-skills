@@ -1,0 +1,4 @@
+interface:
+  display_name: "结构化代码审查"
+  short_description: "按语言、框架和工程场景规范完整审查变更并输出精确行级问题"
+  default_prompt: "使用 $structured-code-review-zh 按文件类型加载对应规范，完整审查全部代码变更并报告精确到行的可验证问题。"

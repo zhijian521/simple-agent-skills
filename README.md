@@ -9,6 +9,7 @@
 | `zhijian-guardrails` | 约束 Agent 的反模式与输出边界 | 前端开发、重构、优化与审查任务的基础约束 |
 | `zhijian-frontend` | 提供项目事实优先的前端开发规范 | Vue、React、Next.js、小程序 / uni-app，以及 JavaScript、TypeScript、样式、接口、测试、可访问性、安全与性能任务 |
 | `zhijian-project-docs` | 管理与同步项目正式文档 | 建立 docs 体系、同步代码与文档、维护方案状态、审查文档漂移和设计文档校验 |
+| `structured-code-review-zh` | 按语言与工程场景执行结构化代码审查 | 工作区、提交、分支、Pull Request、补丁或指定文件的证据化审查 |
 
 ## 推荐组合
 
@@ -20,6 +21,8 @@
 仅需要约束输出边界时，可单独使用 `zhijian-guardrails`。仅需要前端规范指导时，可单独使用 `zhijian-frontend`。
 
 创建、同步或审查项目文档时使用 `zhijian-project-docs`；涉及代码修改时可与对应开发规范 skill 组合使用。
+
+需要完整覆盖变更、按文件类型加载审查规则并输出精确行级问题时，使用 `structured-code-review-zh`。
 
 ## 仓库约定
 
@@ -51,7 +54,12 @@ simple-agent-skills/
 │  ├─ metadata.json
 │  ├─ agents/
 │  └─ references/
-└─ zhijian-project-docs/
+├─ zhijian-project-docs/
+│  ├─ SKILL.md
+│  ├─ metadata.json
+│  ├─ agents/
+│  └─ references/
+└─ structured-code-review-zh/
    ├─ SKILL.md
    ├─ metadata.json
    ├─ agents/

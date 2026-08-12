@@ -1,0 +1,5 @@
+{
+  "name": "structured-code-review-zh",
+  "version": "1.0.0",
+  "description": "按语言与工程场景加载规则、完整覆盖变更并输出证据化行级问题的代码审查技能"
+}
